@@ -1,6 +1,6 @@
 import { Container, Row, Col, Image } from "react-bootstrap";
 
-import "../styles/global.css";
+import "../Styles/global.css";
 import logo from "../assets/D F G SECURTY-1.jpg"; // Import logo image
 import { motion } from "framer-motion";
 import Services from "./Services";

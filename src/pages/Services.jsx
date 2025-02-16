@@ -2,7 +2,7 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaShieldAlt, FaVideo, FaKey } from "react-icons/fa"; // Icons for services
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import "../styles/global.css";
+import "../Styles/global.css";
 
 const services = [
   { title: "Cybersecurity", icon: <FaShieldAlt />, text: "Protect your business from digital threats." },
