@@ -1,111 +1,129 @@
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
-import { motion } from "framer-motion";
+import  { useState } from "react";
+import "../Styles/global.css"; // Ensure styles are updated
 
-const services = [
+const reviews = [
   {
-    title: "Cybersecurity Solutions",
-    description: "Our cybersecurity services ensure complete protection against cyber threats, including malware, phishing, and data breaches.",
+    id: 1,
+    name: "Sachin Burdak",
+    rating: 5,
+    review: "I am so happy to find elfsight. Affordable, efficient, and great customer support. Thanks, elfsight!",
+    profilePic: "S",
   },
   {
-    title: "Advanced Surveillance",
-    description: "We offer high-tech surveillance solutions, including CCTV monitoring, AI-driven analytics, and real-time alerts for enhanced security.",
+    id: 2,
+    name: "Hadi Rezai",
+    rating: 5,
+    review: "Amazing",
+    profilePic: "H",
   },
   {
-    title: "Access Control Systems",
-    description: "Control and monitor entry points with biometric authentication, RFID cards, and automated security checks.",
+    id: 3,
+    name: "Sergio Florez",
+    rating: 5,
+    review: "Todo en orden con las app",
+    profilePic: "S",
   },
   {
-    title: "Security Consultancy",
-    description: "Expert consultations to analyze and enhance your security protocols, ensuring compliance with industry standards.",
-  },
-  {
-    title: "Event Security Management",
-    description: "Comprehensive security solutions for events, ensuring crowd control, emergency response planning, and VIP protection.",
+    id: 4,
+    name: "Semaj95",
+    rating: 4,
+    review: "A really solid keyboard. Got the blue switch one, cuz I like to annoy my friends.",
+    profilePic: "S",
   },
 ];
 
-const JoinUs = () => {
+const ReviewSection = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [newReview, setNewReview] = useState({
+    name: "",
+    rating: 5,
+    review: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newReview.name && newReview.review) {
+      reviews.unshift({ ...newReview, id: reviews.length + 1, profilePic: newReview.name[0] });
+      setNewReview({ name: "", rating: 5, review: "" });
+      setShowForm(false);
+    }
+  };
+
   return (
-    <Container className="mt-5">
-      {/* Page Heading */}
-      <motion.h2
-        className="text-center mb-4"
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        Why Choose DFG Security?
-      </motion.h2>
-      <p className="text-center text-muted">
-        Explore our wide range of security services designed to protect you and your business.
-      </p>
+    <div className="review-section">
+      <h2>What our customers say</h2>
 
-      {/* Services Section */}
-      <Row className="mt-4">
-        {services.map((service, index) => (
-          <Col md={4} key={index} className="mb-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-            >
-              <Card className="shadow-lg border-0 service-card">
-                <Card.Body>
-                  <Card.Title className="fw-bold">{service.title}</Card.Title>
-                  <Card.Text>{service.description}</Card.Text>
-                </Card.Body>
-              </Card>
-            </motion.div>
-          </Col>
+      {/* Rating Summary */}
+      <div className="rating-summary">
+        <div className="overall-rating">
+          <span className="rating-score">4.6</span>
+          <span className="stars">★★★★★</span>
+        </div>
+        <button className="write-review-btn" onClick={() => setShowForm(true)}>
+          Write a Review
+        </button>
+      </div>
+
+      {/* Reviews */}
+      <div className="review-container">
+        {reviews.map((review) => (
+          <div key={review.id} className="review-card">
+            <div className="review-header">
+              <div className="profile-pic">{review.profilePic}</div>
+              <div>
+                <p className="review-author">{review.name}</p>
+                <span className="stars">{"★".repeat(review.rating)}</span>
+              </div>
+            </div>
+            <p className="review-text">{review.review}</p>
+          </div>
         ))}
-      </Row>
+      </div>
 
-      {/* Join Us Section */}
-      <motion.div
-        className="join-us-section p-5 mt-5 text-center bg-dark text-white rounded-4"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <h2>Join Us Today!</h2>
-        <p className="mb-4">
-          Looking for top-tier security services? Fill out the form below, and our team will get back to you promptly.
-        </p>
+      {/* Popup Form */}
+      {showForm && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <h3>Add Your Review</h3>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="Your Name"
+                value={newReview.name}
+                onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
+                required
+              />
+              <textarea
+                placeholder="Your Review"
+                value={newReview.review}
+                onChange={(e) => setNewReview({ ...newReview, review: e.target.value })}
+                required
+              ></textarea>
 
-        {/* Contact Form */}
-        <Form className="contact-form mx-auto" style={{ maxWidth: "500px" }}>
-          <Form.Group className="mb-3" controlId="name">
-            <Form.Label>Full Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter your name" required />
-          </Form.Group>
+              {/* Star Rating Input */}
+              <div className="star-rating">
+                <label>Rating:</label>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <span
+                    key={star}
+                    className={star <= newReview.rating ? "selected-star" : "star"}
+                    onClick={() => setNewReview({ ...newReview, rating: star })}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
 
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control type="email" placeholder="Enter your email" required />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="service">
-            <Form.Label>Select a Service</Form.Label>
-            <Form.Select required>
-              <option>Choose...</option>
-              {services.map((service, index) => (
-                <option key={index}>{service.title}</option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="message">
-            <Form.Label>Additional Details</Form.Label>
-            <Form.Control as="textarea" rows={3} placeholder="Tell us more about your needs..." />
-          </Form.Group>
-
-          <Button variant="light" type="submit" className="fw-bold px-4">
-            Submit Request
-          </Button>
-        </Form>
-      </motion.div>
-    </Container>
+              <button type="submit">Submit</button>
+              <button type="button" className="close-btn" onClick={() => setShowForm(false)}>
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default JoinUs;
+export default ReviewSection;

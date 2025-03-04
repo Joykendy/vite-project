@@ -1,43 +1,47 @@
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { FaShieldAlt, FaVideo, FaKey } from "react-icons/fa"; // Icons for services
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import "../Styles/global.css";
+
+import "../Styles/global.css"; // Ensure this file is imported
+
+import { Grid, Typography, Paper } from "@mui/material";
+import { FaLaptopCode, FaChartBar, FaUsers, FaDatabase, FaShieldAlt, FaMobileAlt, FaMoneyCheckAlt, FaCog, FaBullseye, FaCloud, FaProjectDiagram } from "react-icons/fa";
+
 
 const services = [
-  { title: "Cybersecurity", icon: <FaShieldAlt />, text: "Protect your business from digital threats." },
-  { title: "Surveillance", icon: <FaVideo />, text: "Advanced monitoring systems for enhanced safety." },
-  { title: "Access Control", icon: <FaKey />, text: "Secure entry management solutions." }
+  { icon: <FaLaptopCode />, title: "Software Development", description: "Custom solutions for your business needs." },
+  { icon: <FaChartBar />, title: "Data Analytics", description: "Transform data into actionable insights." },
+  { icon: <FaUsers />, title: "Customer Engagement", description: "Improve user interactions and retention." },
+  { icon: <FaDatabase />, title: "Database Management", description: "Secure and optimize your databases." },
+  { icon: <FaShieldAlt />, title: "Cyber Security", description: "Protect your systems from threats." },
+  { icon: <FaMobileAlt />, title: "Mobile App Development", description: "Build seamless mobile experiences." },
+  { icon: <FaMoneyCheckAlt />, title: "Financial Solutions", description: "Smart tools for finance and banking." },
+  { icon: <FaCog />, title: "System Integration", description: "Connect and optimize your workflows." },
+  { icon: <FaBullseye />, title: "Business Intelligence", description: "Make data-driven decisions with AI." },
+  { icon: <FaCloud />, title: "Cloud Solutions", description: "Scalable cloud computing services." },
+  { icon: <FaProjectDiagram />, title: "Project Management", description: "Streamline operations efficiently." },
 ];
 
-const ServicesSection = () => {
-    const navigate = useNavigate();
+const DFGServices = () => {
   return (
-    <Container className="mt-5 text-center services-section">
-      <h2 className="section-title">Our Services</h2>
-      <Row className="mt-4">
+    <div className="services-section">
+      <Typography variant="h2" className="services-title">
+        Our Services
+      </Typography>
+      <Grid container spacing={3} className="services-container">
         {services.map((service, index) => (
-          <Col md={4} key={index}>
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-            >
-              <Card className="service-card shadow-lg border-0 hover-effect">
-                <Card.Body>
-                  <div className="service-icon">{service.icon}</div>
-                  <Card.Title className="card-title">{service.title}</Card.Title>
-                  <Card.Text className="card-text">{service.text}</Card.Text>
-                 
-                  <Button variant="dark" onClick={() => navigate("/join-us")}>Learn More</Button>
-                </Card.Body>
-              </Card>
-            </motion.div>
-          </Col>
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+            <Paper className="service-card" elevation={3}>
+              <div className="service-icon-wrapper">{service.icon}</div>
+              <Typography variant="h5" className="service-title-text">
+                {service.title}
+              </Typography>
+              <Typography variant="body1" className="service-description">
+                {service.description}
+              </Typography>
+            </Paper>
+          </Grid>
         ))}
-      </Row>
-    </Container>
+      </Grid>
+    </div>
   );
 };
 
-export default ServicesSection;
+export default DFGServices;
